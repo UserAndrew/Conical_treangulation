@@ -78,4 +78,6 @@ int main()
         std::cout << "N{" << coordinates_normal.x << ", " << coordinates_normal.y << ", " << coordinates_normal.z << "}" << std::endl;
         
     }
+    
+    return 0;
 }
