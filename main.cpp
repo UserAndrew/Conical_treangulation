@@ -1,3 +1,10 @@
+/******************************************************************************
+
+                              Online C++ Compiler.
+               Code, Compile, Run and Debug C++ program online.
+Write your code in this editor and press "Run" button to compile and execute it.
+
+*******************************************************************************/
 #include <iostream>
 #include <iomanip>
 #include <cmath>
@@ -25,6 +32,26 @@ Coordinates getCoordinatesA(double height) {
     return coordinates;
 }
 
+Coordinates getCoordinatesNormal(double ax, double ay, double az,\
+                                 double px, double py, double pz,\
+                                 double ppox, double ppoy, double ppoz) {
+    Coordinates coordinates_vec_a;
+    coordinates_vec_a.x = ax - px;
+    coordinates_vec_a.y = ay - py;
+    coordinates_vec_a.z = az - pz;
+    
+    Coordinates coordinates_vec_b;
+    coordinates_vec_b.x = ppox - px;
+    coordinates_vec_b.y = ppoy - py;
+    coordinates_vec_b.z = ppoz - pz;  
+    
+    coordinates_normal.x = coordinates_vec_a.y*coordinates_vec_b.z - coordinates_vec_a.z*coordinates_vec_b.y;
+    coordinates_normal.y = (-1)*(coordinates_vec_a.x*coordinates_vec_b.z - coordinates_vec_a.z*coordinates_vec_b.x);
+    coordinates_normal.z = coordinates_vec_a.x*coordinates_vec_b.y - coordinates_vec_a.y*coordinates_vec_b.x;
+    
+    return coordinates_normal;
+}
+
 int main()
 {
     double H;
@@ -50,18 +77,9 @@ int main()
         std::cout << "Pi[" << i+1 << "] (" << coordinates_pi_plus_one.x << ", "\
         << coordinates_pi_plus_one.y << ", " << coordinates_pi_plus_one.z << ")" << std::endl;
         
-        Coordinates coordinates_vec_a;
-        coordinates_vec_a.x = coordinates_a.x - coordinates_pi.x;
-        coordinates_vec_a.y = coordinates_a.y - coordinates_pi.y;
-        coordinates_vec_a.z = coordinates_a.z - coordinates_pi.z;
-        Coordinates coordinates_vec_b;
-        coordinates_vec_b.x = coordinates_pi_plus_one.x - coordinates_pi.x;
-        coordinates_vec_b.y = coordinates_pi_plus_one.y - coordinates_pi.y;
-        coordinates_vec_b.z = coordinates_pi_plus_one.z - coordinates_pi.z;
-        
-        coordinates_normal.x = coordinates_vec_a.y*coordinates_vec_b.z - coordinates_vec_a.z*coordinates_vec_b.y;
-        coordinates_normal.y = (-1)*(coordinates_vec_a.x*coordinates_vec_b.z - coordinates_vec_a.z*coordinates_vec_b.x);
-        coordinates_normal.z = coordinates_vec_a.x*coordinates_vec_b.y - coordinates_vec_a.y*coordinates_vec_b.x;
+        getCoordinatesNormal(coordinates_a.x, coordinates_a.y, coordinates_a.z, \
+                             coordinates_pi.x, coordinates_pi.y, coordinates_pi.z, \
+                             coordinates_pi_plus_one.x, coordinates_pi_plus_one.y, coordinates_pi_plus_one.z);
         
         std::cout << "Координаты нормали в точке P[" << i << "]:" << std::endl;
         std::cout << "N{" << coordinates_normal.x << ", " << coordinates_normal.y << ", " << coordinates_normal.z << "}" << std::endl;
